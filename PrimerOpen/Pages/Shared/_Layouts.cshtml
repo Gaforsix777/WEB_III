@@ -1,0 +1,54 @@
+﻿@*
+    _Layout.cshtml — Diseño general con header + sidebar (toggle arriba-izquierda)
+    Proyecto: PrimerOpen
+*@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PrimerOpen</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PrimerOpen.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="layout-box">
+
+        <header class="top-header frame">
+            <h1>Gestor de tareas</h1>
+            <button id="toggleSidebar" type="button" class="toggle-btn" title="Mostrar/Ocultar menú">☰</button>
+        </header>
+
+        <!-- Fila principal: Sidebar + Contenido -->
+        <div class="content-row frame">
+            <!-- SIDEBAR -->
+            <aside id="sidebar" class="left-sidebar frame">
+                <nav class="menu">
+                    <a asp-page="/Index" class="menu-item @(Context.Request.Path.Value?.EndsWith("/Index", StringComparison.OrdinalIgnoreCase) == true ? "active" : "")">INICIO</a>
+                    <a asp-page="/Privacy" class="menu-item">Tareas concluidas</a>
+                    <a asp-page="/Privacy" class="menu-item strong">TAREAS CANCELADAS</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO DE CADA PÁGINA -->
+            <main class="main-area frame">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function(){
+            const btn = document.getElementById('toggleSidebar');
+            const sb  = document.getElementById('sidebar');
+            if(btn && sb){
+                btn.addEventListener('click', ()=> sb.classList.toggle('collapsed'));
+            }
+        })();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

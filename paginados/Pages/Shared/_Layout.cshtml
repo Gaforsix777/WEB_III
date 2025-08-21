@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WA Razor</title>
+
+    <!-- Bootstrap (CDN recomendado) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tu CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Opcional: estilos generados por Razor -->
+    <link rel="stylesheet" href="~/WARazor.styles.css" asp-append-version="true" />
+
+    <!-- Iconos -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="p-3">
+                <div class="brand mb-4">
+                    <span class="logo-mini"><b>M</b>P</span>
+                    <span class="logo-lg"><b>Mi</b>Panel</span>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">
+                            <i class="fa fa-home"></i><span>Inicio</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Abre el modal de Registrar de la página actual -->
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#mdlNuevaTarea">
+                            <i class="fa fa-plus"></i><span>Registrar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Privacy">
+                            <i class="fa fa-lock"></i><span>Privacidad</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Contenido -->
+        <div class="flex-grow-1">
+            <!-- Header con toolbar en UNA sola fila -->
+            <header class="header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-light btn-toggle" id="btnToggle">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="m-0 text-white">@ViewData["Title"]</h5>
+                </div>
+
+                <!-- Toolbar inyectable por página -->
+                <div class="toolbar" role="toolbar">
+                    @RenderSection("Toolbar", required: false)
+                </div>
+            </header>
+
+            <main class="main container-fluid">
+                @RenderBody()
+            </main>
+
+            <footer class="border-top text-muted text-center py-2">
+                &copy; 2025 - WA Razor
+            </footer>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        (function () {
+          const btn = document.getElementById("btnToggle");
+          const mql = window.matchMedia("(max-width: 992px)");
+
+          function setDesktopCollapsed(toggle) {
+            document.body.classList.toggle("sidebar-collapsed", toggle);
+          }
+          function setMobileOpen(open) {
+            document.body.classList.toggle("sidebar-open", open);
+          }
+
+          btn?.addEventListener("click", function(){
+            if (mql.matches) {
+              setMobileOpen(!document.body.classList.contains("sidebar-open"));
+            } else {
+              setDesktopCollapsed(!document.body.classList.contains("sidebar-collapsed"));
+            }
+          });
+
+          // Cerrar menú al navegar en móvil
+          document.querySelectorAll("#sidebar .nav-link").forEach(a=>{
+            a.addEventListener("click", ()=> { if (mql.matches) setMobileOpen(false); });
+          });
+
+          // Marcar activo por URL actual (simple)
+          const path = location.pathname.toLowerCase();
+          document.querySelectorAll("#sidebar .nav-link[asp-page]").forEach(a=>{
+            const href = (a.getAttribute("asp-page") || "").toLowerCase();
+            if (href && path.endsWith(href.replace('~',''))) a.classList.add("active");
+          });
+        })();
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

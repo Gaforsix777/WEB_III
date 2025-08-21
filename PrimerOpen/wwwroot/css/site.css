@@ -1,149 +1,227 @@
-/* ================== TEMA VINO & NEGRO ================== */
-
-/* Paleta */
-:root {
-    --vino-1: #8B0022; /* rojo vino */
-    --vino-2: #5a0016; /* vino oscuro */
-    --ink-1: #0b0b0c; /* casi negro */
-    --ink-2: #000000; /* negro */
-    --text: #f2f2f2;
-    --muted: #c5c5c7;
-    --accent: #ff4d6d; /* acento suave */
+/* ========== RESET SUAVE ========== */
+* {
+    box-sizing: border-box;
 }
 
-/* Fondo general sutil */
+html, body {
+    height: 100%;
+}
+
 body {
-    background: radial-gradient(1000px 500px at 20% -10%, #1a0a10 0%, var(--ink-2) 60%) fixed;
-    color: var(--text);
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000; /* títulos negros y texto en negro suave */
+    background: #f6f7f9; /* gris muy claro */
 }
 
-/* Contenedor general del layout */
-.layout-box {
-    padding: 14px;
-}
-
-/* Marcos suaves (mejor que los bordes gruesos) */
-.frame {
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 14px;
-    background: rgba(12,12,12,.35);
-    backdrop-filter: blur(4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+/* ========== LAYOUT ========== */
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .top-header {
-    height: 92px;
-    position: relative;
-    margin-bottom: 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e6e6;
     padding: 10px 14px;
-    background: linear-gradient(135deg, var(--vino-1) 0%, var(--vino-2) 35%, var(--ink-1) 100%);
-    border: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #000;
 }
 
 .toggle-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px; 
-    left: auto;
-    background: rgba(255,255,255,.08);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.15);
-    padding: 8px 12px;
-    border-radius: 10px;
+    border: none;
+    background: transparent;
+    font-size: 1.4rem;
+    line-height: 1;
     cursor: pointer;
-    font-weight: 700;
-    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    color: #000;
 }
 
-    .toggle-btn:hover {
-        background: rgba(255,255,255,.14);
-        box-shadow: 0 6px 18px rgba(0,0,0,.35);
-        transform: translateY(-1px);
+    .toggle-btn:focus {
+        outline: 2px solid #a3d5ff;
+        outline-offset: 2px;
     }
 
-/* -------------------- CUERPO (sidebar + contenido) -------------------- */
-.content-row {
+/* Wrapper: sidebar + content */
+.main {
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 12px;
-    padding: 12px;
-    background: linear-gradient(180deg, rgba(139,0,34,.08) 0%, rgba(0,0,0,.22) 100%);
+    grid-template-columns: 240px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 56px);
 }
 
-/* Sidebar vino oscuro */
-.left-sidebar {
-    color: #fff;
-    background: linear-gradient(160deg, rgba(139,0,34,.85) 0%, rgba(90,0,22,.92) 55%, rgba(15,15,15,.95) 100%);
-    padding: 22px 18px;
-    min-height: 62vh;
-    transition: transform .22s ease;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 12px 28px rgba(0,0,0,.35);
+/* ========== SIDEBAR ========== */
+.sidebar {
+    background: #ffffff;
+    border-right: 1px solid #e6e6e6;
+    padding: 14px;
+    transition: transform .25s ease;
 }
 
-    .left-sidebar.collapsed {
-        transform: translateX( -110% );
+    .sidebar.collapsed {
+        transform: translateX(-100%);
     }
 
-/* Ítems del menú */
 .menu {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 8px;
 }
 
 .menu-item {
-    color: var(--text);
+    display: block;
     text-decoration: none;
-    font-weight: 600;
-    letter-spacing: .3px;
+    color: #000;
+    background: #f3f4f6;
     padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background .15s ease, color .15s ease, transform .05s ease;
 }
 
     .menu-item:hover {
-        background: rgba(255,255,255,.08);
-        border-color: rgba(255,255,255,.12);
-        transform: translateX(2px);
+        background: #e7eaf0;
+    }
+
+    .menu-item:active {
+        transform: scale(0.99);
     }
 
     .menu-item.active {
-        background: linear-gradient(135deg, rgba(255,77,109,.22), rgba(255,77,109,.10));
-        border-color: rgba(255,77,109,.35);
+        background: #dbeafe; /* celeste muy suave para estado activo */
+        color: #0b5aa9;
     }
 
-    .menu-item.strong {
-        text-transform: uppercase;
-        opacity: .95;
-    }
-
-/* Área principal con degradado sutil */
-.main-area {
-    background: linear-gradient(180deg, rgba(12,12,12,.65) 0%, rgba(0,0,0,.82) 100%);
-    padding: 22px;
-    min-height: 62vh;
+/* ========== CONTENT ========== */
+.content {
+    padding: 18px;
 }
 
-/* Encabezado de columnas tipo tabla */
-.table-header {
-    display: grid;
-    grid-template-columns: 2fr 1.2fr 1fr 1fr;
-    column-gap: 28px;
+/* Títulos de página */
+.page-title {
+    margin: 0 0 12px 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #000; /* títulos en negro */
+}
+
+/* ========== TABLAS ========== */
+.table-wrapper {
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    color: #000;
+}
+
+    .table thead {
+        background: #f3f4f6;
+    }
+
+    .table th, .table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .table thead th {
+        font-weight: 700;
+    }
+
+    .table tbody tr:hover {
+        background: #fafafa;
+    }
+
+/* Estado / badges simples */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
     font-weight: 700;
+}
+
+.badge-pendiente {
+    background: #fff3cd;
+    color: #7a5a00;
+}
+
+.badge-progreso {
+    background: #e0f7fa;
+    color: #005b64;
+}
+
+.badge-listo {
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.badge-cancel {
+    background: #fdecea;
+    color: #7a1c1c;
+}
+
+/* ========== BOTONES ========== */
+.btn {
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid #d0d7de;
+    background: #ffffff;
+    color: #111;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+    .btn:hover {
+        background: #f3f4f6;
+    }
+
+    .btn:active {
+        transform: scale(0.99);
+    }
+
+.btn-primary {
+    background: #0b5aa9;
+    border-color: #0b5aa9;
     color: #fff;
-    margin: 8px 6px 0 6px;
-    text-shadow: 0 1px 0 rgba(0,0,0,.5);
 }
 
-/* Utilidades y responsivo */
-@media (max-width: 992px) {
-    .content-row {
-        grid-template-columns: 1fr;
+    .btn-primary:hover {
+        background: #084885;
+        border-color: #084885;
     }
 
-    .left-sidebar.collapsed {
-        transform: none;
-        display: none;
-    }
+.btn-success {
+    background: #2e7d32;
+    border-color: #2e7d32;
+    color: #fff;
 }
+
+    .btn-success:hover {
+        background: #235f26;
+        border-c

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Mi Panel</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="sidebar-open">
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="#" class="logo">
+                <span class="logo-mini"><b>M</b>P</span>
+                <span class="logo-lg"><b>Mi</b>Panel</span>
+            </a>
+            <nav class="navbar-custom">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="header">NAVEGACIÓN PRINCIPAL</li>
+                    <li><a href="~/Index"><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+                    <li><a href="~/Concluida"><i class="fa fa-user"></i> <span>Tareas Finalizadas</span></a></li>
+                    <li><a href="~/Cancelada"><i class="fa fa-user"></i> <span>Tareas Canceladas</span></a></li>
+                    @* <li><a href="~/Saludo"><i class="fa fa-user"></i> <span>Saludo</span></a></li> *@
+                    <li><a href="~/Privacy"><i class="fa fa-lock"></i> <span>Privacidad</span></a></li>
+                </ul>
+            </section>
+        </aside>
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>@ViewData["Title"]</h1>
+            </section>
+            <section class="content">
+                @RenderBody()
+            </section>
+        </div>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Versión</b> 1.0.0
+            </div>
+            <strong>&copy; 2024 - MiPanel</strong>
+        </footer>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

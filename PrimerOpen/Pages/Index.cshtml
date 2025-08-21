@@ -1,16 +1,61 @@
 ﻿@page
-@model PrimerOpen.Pages.IndexModel
+@model IndexModel
 @{
     ViewData["Title"] = "Inicio";
 }
 
-<!-- Encabezados como en tu imagen -->
-<div class="table-header">
-    <span>Nombre Tarea</span>
-    <span>Fecha Vencimiento</span>
-    <span>Estado</span>
-    <span>ACCIONES</span>
-</div>
+<h2 class="page-title">TAREAS ASIGNADAS</h2>
 
-<!-- Aquí van tus filas o el formulario que quieras -->
-<div style="height:60vh;"></div>
+<!-- (Opcional) Mini barra de búsqueda -->
+<form method="get" class="toolbar" style="display:flex; gap:8px; margin-bottom:12px;">
+    <input name="q" class="input" placeholder="Buscar tarea..." />
+    <button class="btn btn-primary" type="submit">Buscar</button>
+</form>
+
+<div class="table-wrapper">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Asignado a</th>
+                <th>Prioridad</th>
+                <th>Fecha inicio</th>
+                <th>Fecha venc.</th>
+                <th>Estado</th>
+                <th style="text-align:center; width: 280px;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filas de ejemplo (reemplaza con tu foreach del modelo) -->
+            <tr>
+                <td>1</td>
+                <td>Diseñar mockups de UI</td>
+                <td>María G.</td>
+                <td>Alta</td>
+                <td>2025-08-18</td>
+                <td>2025-08-22</td>
+                <td><span class="badge badge-pendiente">Pendiente</span></td>
+                <td style="text-align:center;">
+                    <a asp-page="/Tasks/Edit" asp-route-id="1" class="btn">Editar</a>
+                    <a asp-page="/Tasks/Complete" asp-route-id="1" class="btn btn-success">Completar</a>
+                    <a asp-page="/Tasks/Cancel" asp-route-id="1" class="btn btn-danger">Cancelar</a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Configurar despliegue</td>
+                <td>Juan P.</td>
+                <td>Media</td>
+                <td>2025-08-17</td>
+                <td>2025-08-25</td>
+                <td><span class="badge badge-progreso">En progreso</span></td>
+                <td style="text-align:center;">
+                    <a asp-page="/Tasks/Edit" asp-route-id="2" class="btn">Editar</a>
+                    <a asp-page="/Tasks/Complete" asp-route-id="2" class="btn btn-success">Completar</a>
+                    <a asp-page="/Tasks/Cancel" asp-route-id="2" class="btn btn-danger">Cancelar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

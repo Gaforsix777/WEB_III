@@ -1,172 +1,206 @@
 [
   {
+    "Id": 1,
     "nombreTarea": "Escribir informe semanal",
     "fechaVencimiento": "25/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 2,
     "nombreTarea": "Planificar men\uFFFD semanal",
     "fechaVencimiento": "20/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 3,
     "nombreTarea": "Llamar al dentista",
     "fechaVencimiento": "21/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 4,
     "nombreTarea": "Comprar v\uFFFDveres",
     "fechaVencimiento": "20/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 5,
     "nombreTarea": "Pagar facturas",
     "fechaVencimiento": "22/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 6,
     "nombreTarea": "Hacer ejercicio",
     "fechaVencimiento": "19/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 7,
     "nombreTarea": "Limpiar la cocina",
     "fechaVencimiento": "20/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 8,
     "nombreTarea": "Enviar correo importante",
     "fechaVencimiento": "19/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 9,
     "nombreTarea": "Leer 30 minutos",
     "fechaVencimiento": "20/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 10,
     "nombreTarea": "Organizar el escritorio",
     "fechaVencimiento": "21/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 11,
     "nombreTarea": "Regar las plantas",
     "fechaVencimiento": "20/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 12,
     "nombreTarea": "Llevar la ropa a la lavander\uFFFDa",
     "fechaVencimiento": "22/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 13,
     "nombreTarea": "Investigar un nuevo curso online",
     "fechaVencimiento": "25/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 14,
     "nombreTarea": "Revisar presupuesto mensual",
     "fechaVencimiento": "28/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 15,
     "nombreTarea": "Hacer una copia de seguridad de los archivos",
     "fechaVencimiento": "30/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 16,
     "nombreTarea": "Llamar a un familiar",
     "fechaVencimiento": "21/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 17,
     "nombreTarea": "Actualizar el software del computador",
     "fechaVencimiento": "23/08/2025",
-    "estado": "Pendiente"
+    "estado": "Finalizado"
   },
   {
+    "Id": 18,
     "nombreTarea": "Limpiar el ba\uFFFDo",
     "fechaVencimiento": "24/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 19,
     "nombreTarea": "Pasear al perro",
     "fechaVencimiento": "19/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 20,
     "nombreTarea": "Organizar un caj\uFFFDn de ropa",
     "fechaVencimiento": "25/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 21,
     "nombreTarea": "Programar la reuni\uFFFDn del equipo",
     "fechaVencimiento": "22/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 22,
     "nombreTarea": "Terminar el cap\uFFFDtulo de un libro",
     "fechaVencimiento": "21/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 23,
     "nombreTarea": "Preparar la comida para ma\uFFFDana",
     "fechaVencimiento": "20/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 24,
     "nombreTarea": "Agendar cita con el m\uFFFDdico",
     "fechaVencimiento": "26/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 25,
     "nombreTarea": "Sacar la basura",
     "fechaVencimiento": "20/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 26,
     "nombreTarea": "Revisar los correos electr\uFFFDnicos",
     "fechaVencimiento": "19/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 27,
     "nombreTarea": "Completar el formulario de registro",
     "fechaVencimiento": "23/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 28,
     "nombreTarea": "Planificar el viaje de fin de semana",
     "fechaVencimiento": "29/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 29,
     "nombreTarea": "Lavar el coche",
     "fechaVencimiento": "24/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 30,
     "nombreTarea": "Hacer un boceto de un dibujo",
     "fechaVencimiento": "22/08/2025",
     "estado": "En curso"
   },
   {
+    "Id": 31,
     "nombreTarea": "Ordenar la biblioteca",
     "fechaVencimiento": "27/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 32,
     "nombreTarea": "Comprar un regalo",
     "fechaVencimiento": "25/08/2025",
     "estado": "Finalizado"
   },
   {
+    "Id": 33,
     "nombreTarea": "Buscar nuevas recetas",
     "fechaVencimiento": "20/08/2025",
     "estado": "Pendiente"
   },
   {
+    "Id": 34,
     "nombreTarea": "Buscar Autos",
     "fechaVencimiento": "21/08/2025",
-    "estado": "Pendiente"
+    "estado": "Finalizado"
   }
 ]

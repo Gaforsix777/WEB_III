@@ -11,7 +11,7 @@
     <!-- Tu CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <!-- Opcional: estilos generados por Razor -->
+    <!-- (Opcional) Estilos generados por Razor -->
     <link rel="stylesheet" href="~/WARazor.styles.css" asp-append-version="true" />
 
     <!-- Iconos -->
@@ -35,9 +35,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <!-- Abre el modal de Registrar de la página actual -->
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#mdlNuevaTarea">
                             <i class="fa fa-plus"></i><span>Registrar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index" asp-route-estado="Finalizado">
+                            <i class="fa fa-check-circle"></i><span>Tareas Finalizadas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index" asp-route-estado="Cancelado">
+                            <i class="fa fa-times-circle"></i><span>Tareas Canceladas</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -51,10 +60,10 @@
 
         <!-- Contenido -->
         <div class="flex-grow-1">
-            <!-- Header con toolbar en UNA sola fila -->
+            <!-- Header con toolbar en una sola fila -->
             <header class="header d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center gap-2">
-                    <button class="btn btn-outline-light btn-toggle" id="btnToggle">
+                    <button class="btn btn-outline-light btn-toggle" id="btnToggle" type="button" aria-label="Toggle menu">
                         <i class="fa fa-bars"></i>
                     </button>
                     <h5 class="m-0 text-white">@ViewData["Title"]</h5>

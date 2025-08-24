@@ -2,7 +2,6 @@
 @model WARazor.Pages.IndexModel
 @{
     ViewData["Title"] = "Registrar tareas";
-    Layout = "_Layout";
 }
 
 @section Toolbar {
@@ -15,6 +14,23 @@
 }
 
 <div class="container-fluid">
+
+    @* Mensajes *@
+    @if (TempData["ok"] is string ok && !string.IsNullOrWhiteSpace(ok))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle me-1"></i>@ok
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["err"] is string err && !string.IsNullOrWhiteSpace(err))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-triangle-exclamation me-1"></i>@err
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <div class="mb-3"></div>
 
     <!-- Filtros -->
@@ -75,7 +91,7 @@
                     <th>Nombre Tarea</th>
                     <th>Fecha Vencimiento</th>
                     <th>Estado</th>
-                    <th style="width:180px">Acciones</th>
+                    <th style="width:240px">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -98,6 +114,7 @@
                             @if (!string.Equals(t.estado, "Finalizado", StringComparison.OrdinalIgnoreCase))
                             {
                                 <form method="post" asp-page-handler="Estado" class="d-inline">
+                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@t.Id" />
                                     <input type="hidden" name="estado" value="Finalizado" />
                                     <input type="hidden" name="pagina" value="@Model.PaginaActual" />
@@ -118,6 +135,7 @@
                             @if (!string.Equals(t.estado, "Cancelado", StringComparison.OrdinalIgnoreCase))
                             {
                                 <form method="post" asp-page-handler="Estado" class="d-inline ms-1">
+                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="id" value="@t.Id" />
                                     <input type="hidden" name="estado" value="Cancelado" />
                                     <input type="hidden" name="pagina" value="@Model.PaginaActual" />
@@ -133,6 +151,36 @@
                                     </button>
                                 </form>
                             }
+
+                            @* Editar (muestra formulario abajo) *@
+                            <a class="btn btn-sm btn-primary ms-1"
+                               asp-page="/Index"
+                               asp-route-editId="@t.Id"
+                               asp-route-pagina="@Model.PaginaActual"
+                               asp-route-q="@Model.Buscar"
+                               asp-route-order="@Model.Orden"
+                               asp-route-tam="@Model.TamanoPagina"
+                               title="Editar">
+                                <i class="fa fa-pen"></i>
+                            </a>
+
+                            @* Eliminar (ARREGLADO) *@
+                            <form method="post" asp-page-handler="Eliminar" class="d-inline ms-1"
+                                  onsubmit="return confirm('¿Eliminar la tarea &quot;@t.nombreTarea&quot;?');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@t.Id" />
+                                <input type="hidden" name="pagina" value="@Model.PaginaActual" />
+                                <input type="hidden" name="q" value="@Model.Buscar" />
+                                <input type="hidden" name="order" value="@Model.Orden" />
+                                <input type="hidden" name="tam" value="@Model.TamanoPagina" />
+                                @foreach (var es in Model.EstadosSeleccionados)
+                                {
+                                    <input type="hidden" name="estados" value="@es" />
+                                }
+                                <button class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }
@@ -140,7 +188,7 @@
         </table>
     </div>
 
-    <!-- Paginación (preserva filtros y estados) -->
+    <!-- Paginación -->
     <nav aria-label="Paginación" class="mt-3">
         <ul class="pagination justify-content-center">
             <li class="page-item @(Model.PaginaActual==1 ? "disabled" : "")">
@@ -180,12 +228,50 @@
             </li>
         </ul>
     </nav>
+
+    @* Formulario de edición inline *@
+    @if (Model.EditId.HasValue)
+    {
+        <div class="shadow-card p-3 mt-3">
+            <h5 class="mb-3">Editar tarea</h5>
+            <form method="post" asp-page-handler="Editar" class="row g-2">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Editar.Id" />
+                <div class="col-12 col-md-5">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-control" asp-for="Editar.nombreTarea" required />
+                </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-label">Vence</label>
+                    <input type="date" class="form-control" asp-for="Editar.fechaVencimiento" required />
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" asp-for="Editar.estado">
+                        <option>Pendiente</option>
+                        <option>En curso</option>
+                        <option>Finalizado</option>
+                        <option>Cancelado</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-2 d-flex align-items-end gap-2">
+                    <button class="btn btn-primary">Guardar</button>
+                    <a class="btn btn-outline-secondary" asp-page="/Index"
+                       asp-route-pagina="@Model.PaginaActual"
+                       asp-route-q="@Model.Buscar"
+                       asp-route-order="@Model.Orden"
+                       asp-route-tam="@Model.TamanoPagina">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    }
 </div>
 
 <!-- Modal Registrar -->
 <div class="modal fade" id="mdlNuevaTarea" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form class="modal-content" method="post" asp-page-handler="Create">
+            @Html.AntiForgeryToken()
             <div class="modal-header">
                 <h5 class="modal-title">Registrar tarea</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>

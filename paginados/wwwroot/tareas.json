@@ -97,7 +97,7 @@
   },
   {
     "Id": 17,
-    "nombreTarea": "Actualizar el software del computador",
+    "nombreTarea": "Actualizar el software del computadoras",
     "fechaVencimiento": "23/08/2025",
     "estado": "Finalizado"
   },
@@ -141,7 +141,7 @@
     "Id": 24,
     "nombreTarea": "Agendar cita con el m\uFFFDdico",
     "fechaVencimiento": "26/08/2025",
-    "estado": "Pendiente"
+    "estado": "Finalizado"
   },
   {
     "Id": 25,

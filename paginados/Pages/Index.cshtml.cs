@@ -40,8 +40,12 @@ namespace WARazor.Pages
         public string Orden { get; set; } = "az";
         public List<string> EstadosSeleccionados { get; set; } = new();
 
-        // Para el modal de creación
+        // Crear
         [BindProperty] public Tarea Nueva { get; set; } = new();
+
+        // Editar
+        public int? EditId { get; set; }
+        [BindProperty] public Tarea Editar { get; set; } = new();
 
         private readonly ILogger<IndexModel> _logger;
         public IndexModel(ILogger<IndexModel> logger) => _logger = logger;
@@ -62,7 +66,8 @@ namespace WARazor.Pages
             string? order = "az",
             int? tam = null,
             string? estado = null,         // atajo desde menú (Finalizado/Cancelado)
-            string[]? estados = null       // checkboxes múltiples (Pendiente/En curso)
+            string[]? estados = null,      // checkboxes múltiples (Pendiente/En curso)
+            int? editId = null             // habilita formulario de edición
         )
         {
             if (tam.HasValue && tam.Value > 0) TamanoPagina = tam.Value;
@@ -78,7 +83,7 @@ namespace WARazor.Pages
                 new[] { "Pendiente", "En curso" }; // por defecto
             EstadosSeleccionados = estadosFiltro.ToList();
 
-            // Filtrado
+            // Filtrado por estado
             todas = todas.Where(t => EstadosSeleccionados.Contains(t.estado, StringComparer.OrdinalIgnoreCase)).ToList();
 
             // Buscar
@@ -100,6 +105,23 @@ namespace WARazor.Pages
             if (PaginaActual > TotalPaginas) PaginaActual = TotalPaginas;
 
             Tareas = todas.Skip((PaginaActual - 1) * TamanoPagina).Take(TamanoPagina).ToList();
+
+            // Si hay editId, precargar
+            EditId = editId;
+            if (EditId.HasValue)
+            {
+                var t = todas.Concat(LeerTodasConIds()).FirstOrDefault(x => x.Id == EditId.Value);
+                if (t != null)
+                {
+                    Editar = new Tarea
+                    {
+                        Id = t.Id,
+                        nombreTarea = t.nombreTarea,
+                        fechaVencimiento = t.fechaVencimiento,
+                        estado = t.estado
+                    };
+                }
+            }
         }
 
         // ---------- POST: crear ----------
@@ -134,7 +156,7 @@ namespace WARazor.Pages
             return RedirectToPage("/Index");
         }
 
-        // ---------- POST: cambiar estado (Finalizar / Cancelar) ----------
+        // ---------- POST: cambiar estado ----------
         public IActionResult OnPostEstado(int id, string estado, int pagina, string? q, string? order, int? tam, string[]? estados)
         {
             try
@@ -153,7 +175,66 @@ namespace WARazor.Pages
                 TempData["err"] = "No se pudo actualizar la tarea.";
             }
 
-            // volver preservando filtros / paginado
+            return RedirectToPage("/Index", new { pagina, q, order, tam, estados });
+        }
+
+        // ---------- POST: eliminar ----------
+        public IActionResult OnPostEliminar(int id, int pagina, string? q, string? order, int? tam, string[]? estados)
+        {
+            try
+            {
+                var lista = LeerTodasConIds();
+                var idx = lista.FindIndex(x => x.Id == id);
+                if (idx < 0)
+                {
+                    TempData["err"] = "Tarea no encontrada.";
+                }
+                else
+                {
+                    lista.RemoveAt(idx);
+                    Guardar(lista);
+                    TempData["ok"] = "Tarea eliminada.";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al eliminar tarea");
+                TempData["err"] = "No se pudo eliminar la tarea.";
+            }
+
+            return RedirectToPage("/Index", new { pagina, q, order, tam, estados });
+        }
+
+        // ---------- POST: editar ----------
+        public IActionResult OnPostEditar(int pagina, string? q, string? order, int? tam, string[]? estados)
+        {
+            try
+            {
+                var lista = LeerTodasConIds();
+                var t = lista.FirstOrDefault(x => x.Id == Editar.Id);
+                if (t == null)
+                {
+                    TempData["err"] = "Tarea no encontrada.";
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(Editar.nombreTarea))
+                        throw new InvalidOperationException("El nombre es obligatorio.");
+
+                    t.nombreTarea = Editar.nombreTarea.Trim();
+                    t.fechaVencimiento = Editar.fechaVencimiento;
+                    t.estado = string.IsNullOrWhiteSpace(Editar.estado) ? "Pendiente" : Editar.estado.Trim();
+
+                    Guardar(lista);
+                    TempData["ok"] = "Tarea actualizada.";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al editar tarea");
+                TempData["err"] = "No se pudo actualizar la tarea.";
+            }
+
             return RedirectToPage("/Index", new { pagina, q, order, tam, estados });
         }
 
